@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sync</title>
+</head>
+<body>
+    <button onclick="doAjax()">doAjax</button>
+    <div id="info"></div>
+    <button>Click test</button>
+    <input type="text">
+
+    <script>
+        function doAjax(){
+        var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function(event){
+                console.log(xhr.status, xhr.readyState);
+
+            }
+            xhr.open('GET','/',false);
+        xhr.send();
+        };
+       
+        // document.querySelector("id")
+        // info.innerHTML = "hello World";
+        // alert('hi');
+        // console.log("ok");
+    </script>
+</body>
+</html>

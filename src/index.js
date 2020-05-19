@@ -6,6 +6,12 @@ app.get('/',function(req ,res){
     res.send('Hello World!!');
 })
 
+app.get('/panding',function(req ,res){
+    
+})
+app.get('/start',function(req ,res){
+  req.send("/start")
+})
 // app.get('/a.html',function(req ,res){
 //     res.send('Hello World!!!!!!');
 // })
