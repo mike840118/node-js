@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>sync</title>
+    
 </head>
 <body>
     <button onclick="doAjax()">doAjax</button>
@@ -16,9 +17,9 @@
         var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function(event){
                 console.log(xhr.status, xhr.readyState);
-
             }
-            xhr.open('GET','/',false);
+            // xhr.open('GET','/',false);//同步
+            // xhr.open('GET','/panding',true);//非同步
         xhr.send();
         };
        

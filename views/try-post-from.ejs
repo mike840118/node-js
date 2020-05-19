@@ -1,0 +1,32 @@
+<%- include('parts/html-head.ejs') %>
+<%- include('parts/navbar.ejs') %>
+<div class="container">
+    
+
+<form method="POST">
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="text" class="form-control" id="email" name="email">
+      <% if(locals.email){ %> <small>上次輸入的：<%= email %></small>
+        <% } %>
+    </div>
+    <div class="form-group">
+      <label for="Password">Password</label>
+      <input type="password" class="form-control" id="password" name="password">
+        <% if(locals.password){ %> <small>上次輸入的：<%= password %></small>
+            <% } %>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+  <div class="info"></div>
+  <button onclick="doAjax()"></button>
+</div>
+  <%- include('parts/scripts.ejs') %>
+  <script>
+      function doAjax(){
+        
+
+
+      }
+  </script>
+  <%- include('parts/html-foot.ejs') %>
