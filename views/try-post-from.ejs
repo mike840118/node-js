@@ -1,32 +1,55 @@
-<%- include('parts/html-head.ejs') %>
-<%- include('parts/navbar.ejs') %>
+<%- include('parts/html-head') %>
+
+<%- include('parts/navbar') %>
+
 <div class="container">
-    
-
-<form method="POST">
-    <div class="form-group">
-      <label for="email">Email</label>
-      <input type="text" class="form-control" id="email" name="email">
-      <% if(locals.email){ %> <small>上次輸入的：<%= email %></small>
-        <% } %>
-    </div>
-    <div class="form-group">
-      <label for="Password">Password</label>
-      <input type="password" class="form-control" id="password" name="password">
-        <% if(locals.password){ %> <small>上次輸入的：<%= password %></small>
+    <form method="post">
+        <div class="form-group">
+            <label for="email">Email address</label>
+            <input type="text" class="form-control" id="email" name="email">
+            <% if(typeof email!=='undefined'){ %>
+            <small>上次輸入的: <%= email %></small>
             <% } %>
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </form>
-  <div class="info"></div>
-  <button onclick="doAjax()"></button>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" name="password">
+            <% if(!! locals.password){ %>
+            <small>上次輸入的: <%= password %></small>
+            <% } %>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+    <div id="info"></div>
+    <button onclick="doAjax()">ajax send</button>
 </div>
-  <%- include('parts/scripts.ejs') %>
-  <script>
-      function doAjax(){
-        
+<%- include('parts/scripts') %>
+<script>
+    function doAjax(){
+        // $.post('/try-json-post', $('form').serialize(), function(data){
+        //     info.innerHTML = data;
+        // }, 'text');
 
+        const data = {
+            email: $('#email').val(),
+            password: password.value,
+        }
 
-      }
-  </script>
-  <%- include('parts/html-foot.ejs') %>
+        fetch('/try-json-post', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(r=>r.text())
+        .then(txt=>{
+            info.innerHTML = txt;
+        })
+
+    }
+
+</script>
+<%- include('parts/html-foot') %>

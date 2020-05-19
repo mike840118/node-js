@@ -1,69 +1,64 @@
 let express = require('express');
 
 let app = express();
+
 app.set('view engine', 'ejs');
 //middleware
 app.use(express.urlencoded({extended : false}));
 //或者 
 app.use(express.json());
 
-app.get('/json' ,function(req,res){
-    const data = require(__dirname + '/../data/sales');
-    // res.json(data[2]);
-    res.render('sales', {
-       sales : data
-    });
+app.get('/sales-json', (req, res)=>{
+    const sales = require(__dirname + '/../data/sales');
+    //res.json(data[2]);
+    res.render('sales-json', { sales })
 });
 
-app.get('/', function (req, res) {
-    // res.render('sales', {name: 'Shinder'});
-    res.send("ok")
+app.get('/', (req, res)=>{
+    res.render('main', {name: 'Shin'});
+});
+app.get('/try-qs',  (req, res)=> {
+   
+    res.json(req.query);
 })
-
- 
 app.get('/try-post-from', (req,res) =>{
     // req.body.haha("shine")
     res.render('try-post-from')
 });
-
-app.get('/try-get', (req,res) =>{
-    // req.body.haha("shine")
-    res.render('try-post-from') 
-    // req.body.content=res.get("message")
-});
-
-
 app.post('/try-post-from', (req,res) =>{
     
     res.render('try-post-from',req.body)
 });
 
-app.get('/try-qs',  (req, res)=> {
-   
-    res.json(req.query);
+app.post('/try-json-post', (req, res)=>{
+    req.body.haha = 'shin';
+    req.body.contentType = req.get('Content-Type'); // 取得檔頭
+
+    res.json(req.body);
 })
 
-app.get('/panding',function(req ,res){
-    
-})
-app.get('/start',function(req ,res){
-  res.send("start")
-})
-// app.get('/a.html',function(req ,res){
-//     res.send('Hello World!!!!!!');
-// })
+app.get('/pending', (req, res)=>{
 
-// 放在路由器設定的前面
+});
+app.get('/ok', (req, res)=>{
+    res.send('ok');
+});
+
+// app.get('/a.html', (req, res)=>{
+//     res.send('from route');
+// });
+
 app.use(express.static('public'));
 
-app.listen(3000,()=>{
-    console.log("Start!!")
+app.use((req, res)=>{
+    res.status(404)
+    res.send(`
+    <h2>找不到你要的頁面</h2>
+    <h3>...</h3>
+    `)
 })
 
 
-
-app.use((req , res)=> {
-    res.type('text/plain');
-    res.status(404);
-    res.send(`404 - 找不到網頁`)
+app.listen(3000, ()=>{
+    console.log('server started')
 })
