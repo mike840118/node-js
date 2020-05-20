@@ -28,26 +28,26 @@
 <%- include('parts/scripts') %>
 <script>
     function doAjax(){
-        // $.post('/try-json-post', $('form').serialize(), function(data){
-        //     info.innerHTML = data;
-        // }, 'text');
+        $.post('/try-json-post', $('form').serialize(), function(data){
+            info.innerHTML = data;
+        }, 'text');
 
-        const data = {
-            email: $('#email').val(),
-            password: password.value,
-        }
+        // const data = {
+        //     email: $('#email').val(),
+        //     password: password.value,
+        // }
 
-        fetch('/try-json-post', {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        })
-        .then(r=>r.text())
-        .then(txt=>{
-            info.innerHTML = txt;
-        })
+        // fetch('/try-json-post', {
+        //     method: 'POST',
+        //     headers: {
+        //         'content-type': 'application/json'
+        //     },
+        //     body: JSON.stringify(data)
+        // })
+        // .then(r=>r.text())
+        // .then(txt=>{
+        //     info.innerHTML = txt;
+        // })
 
     }
 

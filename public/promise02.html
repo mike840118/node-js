@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="info">
+        <p>123</p>
+    </div>
+
+    <script>
+        function func(msec){
+    return new Promise((resolve,reject)=>{
+        
+        setTimeout(function(){
+            resolve(Math.random().msec)
+        }.msec)
+    })
+    
+    }
+    function doSomeing(){
+        console.log('1')
+    const ar=[]
+    func(600)
+    .then(r=>{
+        ar.push(r)
+        return func(700)
+ 
+    }) 
+    .then(r=>{
+        ar.push(r)
+        return ar;
+ 
+    }) 
+    console.log('3');
+}
+    // info.innerHTML +=JSON.stringify(ar);
+    const br = doSomething();
+    console.log('br:', br);
+    
+    
+     </script>
+</body>
+</html>

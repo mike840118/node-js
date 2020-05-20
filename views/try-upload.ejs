@@ -1,0 +1,25 @@
+<%- include('parts/html-head') %>
+
+<%- include('parts/navbar') %>
+
+<div class="container">
+    <form method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="avatar">大頭貼</label>
+            <input type="file" class="form-control" id="avatar" name="avatar">
+        </div>
+        <div class="form-group">
+            <label for="nickname">nickname</label>
+            <input type="text" class="form-control" id="nickname" name="nickname">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <div>
+        <img src="<%= locals.uploadedImg ? uploadedImg : '' %>" alt="">
+        <p><%= locals.nickname ? nickname : '' %></p>
+    </div>
+</div>
+<%- include('parts/scripts') %>
+
+<%- include('parts/html-foot') %>

@@ -1,6 +1,9 @@
 let express = require('express');
-
+const multer = require('multer');
+const upload = multer({dest: 'tmp_uploads/'})
+const fs = require('fs');
 let app = express();
+
 
 app.set('view engine', 'ejs');
 //middleware
@@ -21,6 +24,39 @@ app.get('/try-qs',  (req, res)=> {
    
     res.json(req.query);
 })
+app.get('/try-upload', (req, res)=>{
+    res.render('try-upload');
+})
+
+app.post('/try-upload', upload.single('avatar'), (req, res)=>{
+    
+    const output = {
+        success: false,
+        uploadedImg: '',
+        nickname: '',
+        errorMsg: ''
+    }
+    output.nickname = req.body.nickname || '';
+    if(req.file && req.file.originalname){
+        switch(req.file.mimetype){
+            case 'image/png':
+            case 'image/jpeg':
+                fs.rename(req.file.path, './public/img'+ req.file.originalname, error=>{
+                    if(!error){
+                        output.success = true;
+                        output.uploadedImg = '/img/' + req.file.originalname;
+                    }
+                    res.render('try-upload', output);
+                })
+                break;
+            default:
+                fs.unlink(req.file.path, error=>{
+                    output.errorMsg = '檔案類型錯誤'
+                    res.render('try-upload', output);
+                })
+        }
+    }
+});
 app.get('/try-post-from', (req,res) =>{
     // req.body.haha("shine")
     res.render('try-post-from')
