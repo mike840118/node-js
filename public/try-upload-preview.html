@@ -34,10 +34,11 @@ const myimg = $('#myimg');
 avatar.on('change', function(event){
     const reader = new FileReader();
 
-    reader.addEventListener('load',function(event){
-        myimg.attr('src',reader.result);
-    });
-    reader.readAsDataURL(avatar[0],files[0])
+reader.addEventListener('load', function(event){
+    myimg.attr('src', reader.result);
+});
+
+reader.readAsDataURL(avatar[0].files[0])
 })
 
 
