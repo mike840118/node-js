@@ -41,7 +41,7 @@ app.post('/try-upload', upload.single('avatar'), (req, res)=>{
         switch(req.file.mimetype){
             case 'image/png':
             case 'image/jpeg':
-                fs.rename(req.file.path, './public/img'+ req.file.originalname, error=>{
+                fs.rename(req.file.path, './public/img/'+ req.file.originalname, error=>{
                     if(!error){
                         output.success = true;
                         output.uploadedImg = '/img/' + req.file.originalname;
