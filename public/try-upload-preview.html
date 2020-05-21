@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="fontawesome/css/all.css">
+    <title>Document</title>
+</head>
+<body>
+<button onclick="$('#avatar').click()" class="btn alert-danger">select a img file</button>
+
+<div class="container">
+    <form name="form1" style="display: none">
+        <div class="form-group">
+            <input type="file" class="form-control" id="avatar" name="avatar" accept="image/jpeg">
+        </div>
+    </form>
+
+</div>
+
+<img src="" alt="" id="myimg">
+
+
+<script src="js/jquery-3.5.1.js"></script>
+<script src="bootstrap/js/bootstrap.bundle.js"></script>
+
+<script>
+const avatar = $('#avatar');
+const myimg = $('#myimg');
+
+avatar.on('change', function(event){
+    const reader = new FileReader();
+
+    reader.addEventListener('load',function(event){
+        myimg.attr('src',reader.result);
+    });
+    reader.readAsDataURL(avatar[0],files[0])
+})
+
+
+</script>
+</body>
+</html>
