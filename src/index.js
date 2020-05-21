@@ -65,6 +65,26 @@ app.post('/try-upload2', upload.single('avatar'), (req, res)=>{
         body: req.body
     });
 })
+
+// app.get('/my-params1/:action/:id', (req, res)=>{
+//      res.json(req.params);
+// });
+
+// app.get('/my-params1/:action?/:id?', (req, res)=>{
+//     res.json(req.params);
+// });
+
+// app.get('/my-params1/*/*?', (req, res)=>{
+//      res.json(req.params);
+// });
+
+app.get(/^\/mobile\/09\d{2}-?\d{3}-?\d{3}$/, (req, res) =>{
+    let url = req.url.slice(8).split('?')[0];
+    url= url.split('-').join('');
+    res.send('Mobile : ' + url);
+    // req.body.haha("shine")
+    
+});
 app.get('/try-post-from', (req,res) =>{
     // req.body.haha("shine")
     res.render('try-post-from')
