@@ -4,7 +4,7 @@ let express = require('express');
 const upload = require(__dirname + '/upload-module');
 
 const fs = require('fs');
-let app = express();
+const app = express();
 
 
 app.set('view engine', 'ejs');
@@ -60,8 +60,10 @@ app.get('/try-upload', (req, res)=>{
 //     }
 // });
 app.post('/try-upload2', upload.single('avatar'), (req, res)=>{
-    console.log(req.file)
-    res.send('ok')
+    res.json({
+        filename: req.file.filename,
+        body: req.body
+    });
 })
 app.get('/try-post-from', (req,res) =>{
     // req.body.haha("shine")

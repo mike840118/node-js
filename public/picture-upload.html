@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+<!--主要是影藏input，使用button點進去之後上傳圖片就會顯示在底下。
+    請參考try-upload.html 
+    input裡面可以設定accept決定上傳檔案的格式 但是只限於type="file"的情況下才能使用-->
+    
+    <button class="btn btn-info" onclick="$('#avatar').click()">button</button>
+    <div class="container">
+        <form name="form1" style="display:none">
+            <div class="form-group">
+              <input type="file" class="form-control" id="avatar" name="avatar" >     
+            </div>
+            </form> 
+
+            <img id="myimg" src="" alt="">
+    </div>
+</body>
+</html>
