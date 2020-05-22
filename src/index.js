@@ -3,6 +3,8 @@ let express = require('express');
 // const upload = multer({dest: 'tmp_uploads/'})
 const upload = require(__dirname + '/upload-module');
 
+
+const moment = require('moment-timezone');
 const fs = require('fs');
 const app = express();
 
@@ -30,6 +32,11 @@ app.use((req,res ,next)=>{
     }
     next();
 });
+//登入的middleware
+app.use((req,res,next)=>{
+    res.locals.sess=req.session ||{}
+    next();
+})
 
 app.get('/sales-json', (req, res)=>{
     const sales = require(__dirname + '/../data/sales');
@@ -137,10 +144,63 @@ app.get('/pending', (req, res)=>{
 app.get('/ok', (req, res)=>{
     res.send('ok');
 });
+app.get('/login',(req,res)=>{
+res.render('login')
+})
+app.post('/login', upload.none(), (req, res)=> {
+    const users = {
+        'shin' : {
+            pass: '12345',
+            nick: '小新'
+        },
+        'ming' : {
+            pass: '5678',
+            nick: '小明'
+        },
+    };
 
+    const output = {
+        success: false,
+        body: req.body
+    };
+
+    if(users[req.body.account] && users[req.body.account].pass===req.body.password){
+        output.success = true;
+        req.session.user = {
+            id: req.body.account,
+            nickname: users[req.body.account].nick,
+        }
+    }
+    output.sess_user = req.session.user;
+
+    res.json(output);
+});
+
+app.get('/logout',(req,res)=>{
+    delete req.session.user;
+    res.redirect('/login');
+    })
 // app.get('/a.html', (req, res)=>{
 //     res.send('from route');
 // });
+// 時間格式化輸出
+app.get('/try-moment',(req,res)=>{
+    const fm = 'YYYY-MM-DD HH:mm:ss';
+    const m1 = moment(new Date());
+    const m2 = moment(req.session.cookie.expires);
+    const m3 = moment('2019-01-10')
+    res.json({
+        m1:m1.format(fm),
+        m2:m2.format(fm),
+        m3:m3.format(fm),
+        m4:m1.tz('Europe/London').format(fm),
+        m5:m2.tz('Europe/London').format(fm),
+        m6:m3.tz('Europe/London').format(fm),
+    })
+});
+
+app.use('address-book',require(__dirname+'/address_book'))
+
 app.get('/try-session',(req,res)=>{
     req.session.my_var=req.session.my_var||0;
     req.session.my_var++
