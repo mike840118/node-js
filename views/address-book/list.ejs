@@ -1,0 +1,30 @@
+<%- include('../parts/html-head') %>
+<%- include('../parts/navbar') %>
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">sid</th>
+            <th scope="col">name</th>
+            <th scope="col">email</th>
+            <th scope="col">mobile</th>
+            <th scope="col">birthday</th>
+            <th scope="col">address</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% for(let i of rows){ %>
+        <tr>
+            <td><%= i.sid %></td>
+            <td><%= i.name %></td>
+            <td><%= i.email %></td>
+            <td><%= i.mobile %></td>
+            <td><%= i.birthday %></td>
+            <td><%= i.address %></td>
+        </tr>
+        <% } %>
+        </tbody>
+    </table>
+</div>
+<%- include('../parts/scripts') %>
+<%- include('../parts/html-foot') %>

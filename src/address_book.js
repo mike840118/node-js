@@ -5,9 +5,9 @@ const router = express.Router();
 
 router.get('/list', (req, res)=>{
 
-    db.query("SELECT * FROM address_book LIMIT 2")
-        .then(([results, fields])=>{
-            res.json(results);
+    db.query("SELECT * FROM address_book LIMIT 10")
+        .then(([rows])=>{
+            res.render('address-book/list', { rows });
         })
 })
 
