@@ -199,7 +199,7 @@ app.get('/try-moment',(req,res)=>{
     })
 });
 
-app.use('address-book',require(__dirname+'/address_book'))
+app.use('/address-book', require(__dirname+'/address_book'));
 
 app.get('/try-session',(req,res)=>{
     req.session.my_var=req.session.my_var||0;
