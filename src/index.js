@@ -10,8 +10,26 @@ const app = express();
 app.set('view engine', 'ejs');
 //middleware
 app.use(express.urlencoded({extended : false}));
+const session = require ('express-session');
+app.use(session({
+    // 新用戶沒有使用到 session 物件時不會建立 session 和發送 cookie
+    saveUninitialized:false,
+    resave:false,// 沒變更內容是否強制回存
+    secret:'121huaijnkslajjfkadljgal;kjdg;md;c',//加密文字
+    cookie:{
+        maxAge:1200000,//20分鐘，毫秒
+    }
+}));
 //或者 
 app.use(express.json());
+//另外一個middleware
+app.use((req,res ,next)=>{
+    res.locals.memberData={
+        name:'shin',
+        action:'edit'
+    }
+    next();
+});
 
 app.get('/sales-json', (req, res)=>{
     const sales = require(__dirname + '/../data/sales');
@@ -59,10 +77,19 @@ app.get('/try-upload', (req, res)=>{
 //         }
 //     }
 // });
+//  組合的方式----
+// const func =
+//  (req, res)=>{
+//     res.json({
+//         filename: req.file.filename,
+//         body: req.body
+//     });
+// }
 app.post('/try-upload2', upload.single('avatar'), (req, res)=>{
     res.json({
         filename: req.file.filename,
         body: req.body
+        
     });
 })
 
@@ -85,6 +112,9 @@ app.get(/^\/mobile\/09\d{2}-?\d{3}-?\d{3}$/, (req, res) =>{
     // req.body.haha("shine")
     
 });
+// const admin2Router = require(__dirname + '/admins/admin2');
+app.use('/my/', require(__dirname + '/admins/admin2'));
+
 app.get('/try-post-from', (req,res) =>{
     // req.body.haha("shine")
     res.render('try-post-from')
@@ -111,6 +141,14 @@ app.get('/ok', (req, res)=>{
 // app.get('/a.html', (req, res)=>{
 //     res.send('from route');
 // });
+app.get('/try-session',(req,res)=>{
+    req.session.my_var=req.session.my_var||0;
+    req.session.my_var++
+    res.json({
+        my_var:req.session.my_var,
+        session:req.session
+    })
+})
 
 app.use(express.static('public'));
 

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
+    <script>
+        const arr1= [2,3,4,[5,6,7],8];
+        const arr2 = [...arr1];
+        arr3 =JSON.parse(JSON.stringify(arr1));
+        arr1[1] = 300;
+        arr1[3][1] = 600;
+        br = [2,3,4,55,6]
+        console.log("arr1 : ",arr1);
+        console.log("arr2 : ",arr2);
+        console.log("arr3 : ",arr3);
+        // Math.max是整數，不可超過一層，只能運算淺層
+        console.log(Math.max(...br))
+        console.log(Math.max.apply(br , br))
+    </script>
+</body>
+</html>
