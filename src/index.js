@@ -45,7 +45,9 @@ app.get('/sales-json', (req, res)=>{
 });
 
 app.get('/', (req, res)=>{
+    
     res.render('main', {name: 'Shin'});
+   
 });
 app.get('/try-qs',  (req, res)=> {
    
