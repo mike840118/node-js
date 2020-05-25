@@ -1,0 +1,89 @@
+<%- include('../parts/html-head') %>
+<%- include('../parts/navbar') %>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6">
+            <div id="infobar" class="alert alert-success" role="alert" style="display: none">
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">修改資料</h5>
+
+                    <form name="form1" onsubmit="return checkForm()">
+                        <input type="hidden" name="sid" value="<%= sid %>">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" id="name" name="name"
+                                   value="<%= name %>"
+                                   required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email address</label>
+                            <input type="email" class="form-control" id="email" name="email"
+                                   value="<%= email %>">
+                        </div>
+                        <div class="form-group">
+                            <label for="mobile">Mobile</label>
+                            <input type="text" class="form-control" id="mobile" name="mobile"
+                                   value="<%= mobile %>"
+                                   pattern="09\d{2}-?\d{3}-?\d{3}">
+                        </div>
+                        <div class="form-group">
+                            <label for="birthday">Birthday</label>
+                            <input type="text" class="form-control" id="birthday" name="birthday"
+                                   value="<%= birthday %>">
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Address</label>
+                            <textarea class="form-control" id="address" name="address"
+                                      cols="30" rows="3" required><%= address %></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include('../parts/scripts') %>
+<script>
+    const infobar = $('#infobar');
+    function checkForm(){
+        infobar.hide();
+        // TODO: 檢查欄位值的格式
+
+        const fd = new FormData(document.form1);
+        fetch('/address-book/edit',{
+            method: "POST",
+            body: fd
+        })
+        .then(r=>r.json())
+        .then(obj=>{
+            console.log(obj);
+            if(obj.success) {
+                infobar
+                    .removeClass('alert-danger')
+                    .addClass('alert-success')
+                    .text('修改成功');
+                setTimeout(()=>{
+                    infobar.slideUp();
+                }, 1000);
+            } else {
+                infobar
+                    .removeClass('alert-success')
+                    .addClass('alert-danger')
+                    .text('沒有修改');
+                setTimeout(()=>{
+                    infobar.slideUp();
+                }, 1000);
+            }
+            infobar.show();
+        })
+        return false;
+    }
+
+</script>
+<%- include('../parts/html-foot') %>

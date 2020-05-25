@@ -1,26 +1,61 @@
 <%- include('../parts/html-head') %>
 <%- include('../parts/navbar') %>
+<style>
+    .table a .fa-trash-alt {
+        color: #890b0b;
+    }
+</style>
 <div class="container">
+
+    <div class="row">
+        <div class="col">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li class="page-item <%= 1===page ? 'disabled' : '' %>">
+                        <a class="page-link" href="/address-book/list/<%= page-1 %>"><i class="fas fa-arrow-circle-left"></i></a>
+                    </li>
+                    <% for(let i=1; i<= totalPages; i++){ %>
+                        <li class="page-item <%= i===page ? 'active' : '' %>">
+                            <a class="page-link" href="/address-book/list/<%= i %>"><%= i %></a>
+                        </li>
+                    <% } %>
+                    <li class="page-item <%= totalPages===page ? 'disabled' : '' %>">
+                        <a class="page-link" href="/address-book/list/<%= page+1 %>"><i class="fas fa-arrow-circle-right"></i></a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+
     <table class="table table-striped">
         <thead>
         <tr>
+            <th scope="col"><i class="fas fa-trash-alt"></i></th>
             <th scope="col">sid</th>
             <th scope="col">name</th>
             <th scope="col">email</th>
             <th scope="col">mobile</th>
             <th scope="col">birthday</th>
             <th scope="col">address</th>
+            <th scope="col"><i class="fas fa-edit"></i></th>
         </tr>
         </thead>
         <tbody>
         <% for(let i of rows){ %>
         <tr>
+            <td>
+                <a href="/address-book/del/<%= i.sid %>"><i class="fas fa-trash-alt"></i></a>
+            </td>
             <td><%= i.sid %></td>
             <td><%= i.name %></td>
             <td><%= i.email %></td>
             <td><%= i.mobile %></td>
             <td><%= i.birthday %></td>
             <td><%= i.address %></td>
+            <td>
+                <a href="/address-book/edit/<%= i.sid %>"><i class="fas fa-edit"></i></a>
+            </td>
         </tr>
         <% } %>
         </tbody>
