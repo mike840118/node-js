@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="info"></div>
+
+
+<script>
+
+    
+    fetch('http://localhost:3000/try-session')
+    .then(r=>r.json())
+    .then(obj=>{
+        console.log(obj);
+        info.innerHTML = JSON.stringify(obj.my_var)
+    })
+
+
+</script>
+</body>
+</html>

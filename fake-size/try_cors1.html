@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="info"></div>
+
+
+<script>
+
+    fetch('http://localhost:3000/address-book/api/list/2')
+    .then(r=>r.json())
+    .then(obj=>{
+        console.log(obj);
+        info.innerHTML = JSON.stringify(obj)
+    })
+
+
+</script>
+</body>
+</html>

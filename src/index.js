@@ -4,6 +4,7 @@ const session = require('express-session');
 const MysqlStore = require('express-mysql-session')(session);
 const db = require(__dirname + '/db_connect2');
 const moment = require('moment-timezone');
+const cors = require('cors');
 
 const fs = require('fs');
 // const upload = multer({dest: 'tmp_uploads/'})
@@ -12,11 +13,24 @@ const upload = require(__dirname + '/upload-module');
 
 const app = express();
 
+var whitelist = ['http://localhost:3000' , undefined ,'http://http://127.0.0.1:5000','http://localhost:8080']
+var corsOptions = {
+    credentials:true,
+    origin:function(origin , cb){
+        console.log('origin: ',+origin);
+        if (whitelist.indexOf(origin) !== -1){
+            cb(null , true)
+        }else{
+            cb(null , false)
+        }
+    }
+};
+app.use(cors(corsOptions));
 app.set('view engine', 'ejs');
-
 // top-level middleware
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
+app.use(cors());
 const sessionStore = new MysqlStore({}, db);
 app.use(session({
     saveUninitialized: false,

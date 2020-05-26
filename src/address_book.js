@@ -8,6 +8,13 @@ const router = express.Router();
 router.get('/', (req, res)=>{
     res.redirect(req.baseUrl + '/list');
 });
+router.get('/login', (req, res)=>{
+    res.render('address-book/login');
+});
+router.post('/login', upload.none(), (req, res)=>{
+    //res.render('address-book/login');
+    res.json(req.body);
+});
 router.get('/del/:sid', (req, res)=>{
     let referer = req.get('Referer'); // 從哪裡來
     const sql = "DELETE FROM `address_book` WHERE sid=?";
