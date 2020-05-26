@@ -5,28 +5,57 @@ const db = require(__dirname + '/db_connect2');
 
 const router = express.Router();
 
+
+router.use((req, res, next)=>{
+    const white = ['list', 'login','api','list2'];
+    let u = req.url.split('/')[1];
+    u = u.split('?')[0];
+
+    if(!req.session.admin){
+        if(white.indexOf(u) !==-1){
+            next();
+        } else {
+            res.status(403).send('賣來');
+        }
+    } else {
+        next();
+    }
+});
 router.get('/', (req, res)=>{
     res.redirect(req.baseUrl + '/list');
 });
+
 router.get('/login', (req, res)=>{
-    res.render('address-book/login');
+    if(req.session.admin){
+        res.redirect('/address-book/list');
+    } else {
+        res.render('address-book/login');
+    }
+
 });
 router.post('/login', upload.none(), (req, res)=>{
+    const  output = {
+        body: req.body,
+        success: false
+    }
     //res.render('address-book/login');
-    res.json(req.body);
-});
-router.get('/del/:sid', (req, res)=>{
-    let referer = req.get('Referer'); // 從哪裡來
-    const sql = "DELETE FROM `address_book` WHERE sid=?";
-    db.query(sql, [req.params.sid])
+    const sql = "SELECT `sid`, `account`, `nickname` FROM admins WHERE account=? AND password=SHA1(?)";
+    db.query(sql, [req.body.account, req.body.password])
         .then(([r])=>{
-            if(referer){
-                res.redirect(referer)//從哪裡去
-            } else {
-                res.redirect('/address-book/list')//回主畫面
+            if(r && r.length){
+                req.session.admin = r[0];
+                output.success = true;
             }
+            res.json(output);
         })
-})
+
+    //res.json(req.body);
+});
+router.get('/logout', (req, res)=>{
+    delete req.session.admin;
+    res.redirect('/address-book/list');
+});
+
 router.get('/edit/:sid', (req, res)=>{
     const sql = "SELECT * FROM address_book WHERE sid=?";
     db.query(sql, [req.params.sid])
@@ -116,11 +145,17 @@ const getDataList = async (req)=>{
     }
     return output;
 };
-
+router.get('/list2/', async (req, res)=>{
+        res.render('address-book/list2', );
+})
 router.get('/list/:page?', async (req, res)=>{
     const output = await getDataList(req);
-    res.render('address-book/list', output);
+    if(req.session.admin)
+        res.render('address-book/list', output);
+    else
+        res.render('address-book/list-no-admin', output);
 })
+
 router.get('/api/list/:page?', async (req, res)=>{
     const output = await getDataList(req);
     res.json(output);

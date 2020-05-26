@@ -31,52 +31,27 @@
     <table class="table table-striped">
         <thead>
         <tr>
-            <th scope="col"><i class="fas fa-trash-alt"></i></th>
             <th scope="col">sid</th>
             <th scope="col">name</th>
             <th scope="col">email</th>
             <th scope="col">mobile</th>
             <th scope="col">birthday</th>
             <th scope="col">address</th>
-            <th scope="col"><i class="fas fa-edit"></i></th>
         </tr>
         </thead>
         <tbody>
         <% for(let i of rows){ %>
         <tr>
-<!--            <td>-->
-<!--                <a href="javascript:del_it(<%= i.sid %>)"><i class="fas fa-trash-alt"></i></a>-->
-<!--            </td>-->
-            <td>
-                <a href="/address-book/del/<%= i.sid %>" onclick="doDel(event, <%= i.sid %>)"><i class="fas fa-trash-alt"></i></a>
-            </td>
             <td><%= i.sid %></td>
             <td><%= i.name %></td>
             <td><%= i.email %></td>
             <td><%= i.mobile %></td>
             <td><%= i.birthday %></td>
             <td><%= i.address %></td>
-            <td>
-                <a href="/address-book/edit/<%= i.sid %>"><i class="fas fa-edit"></i></a>
-            </td>
         </tr>
         <% } %>
         </tbody>
     </table>
 </div>
 <%- include('../parts/scripts') %>
-<script>
-    const trytry = <%- JSON.stringify(sess) %>;
-    function doDel(event, sid){
-        if(! confirm(`你確定要刪除編號為 ${sid} 的資料嗎?`)){
-            event.preventDefault();
-        }
-    }
-
-    function del_it(sid){
-        if(confirm(`你確定要刪除編號為 ${sid} 的資料嗎?`)){
-            location.href = '/address-book/del/' +sid;
-        }
-    }
-</script>
 <%- include('../parts/html-foot') %>
