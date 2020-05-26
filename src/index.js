@@ -1,6 +1,8 @@
 const express = require('express');
 // const multer = require('multer');
 const session = require('express-session');
+const MysqlStore = require('express-mysql-session')(session);
+const db = require(__dirname + '/db_connect2');
 const moment = require('moment-timezone');
 
 const fs = require('fs');
@@ -15,10 +17,12 @@ app.set('view engine', 'ejs');
 // top-level middleware
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
+const sessionStore = new MysqlStore({}, db);
 app.use(session({
     saveUninitialized: false,
     resave: false,
     secret: 'dolkidf;lalsdfjls',
+    store:sessionStore,
     cookie:{
         maxAge: 1200000
     }
