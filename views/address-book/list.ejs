@@ -45,7 +45,9 @@
         <% for(let i of rows){ %>
         <tr>
             <td>
-                <a href="/address-book/del/<%= i.sid %>"><i class="fas fa-trash-alt"></i></a>
+                <a href="/address-book/del/<%= i.sid %> "onclick="doDel(event, <%= i.sid %>)"><i class="fas fa-trash-alt"></i></a>
+                
+
             </td>
             <td><%= i.sid %></td>
             <td><%= i.name %></td>
@@ -62,4 +64,21 @@
     </table>
 </div>
 <%- include('../parts/scripts') %>
+<script>
+
+function doDel(event , sid){
+       if(! confirm(`您確定要刪除這筆${sid}的資料嗎`)){
+           event.preventDefault()
+        //    location.href='/address-book/del/' +sid;
+       }
+    }
+  
+
+
+    function del_it(sid){
+       if( confirm(`您確定要刪除這筆${sid}的資料嗎`)){
+           location.href='/address-book/del/' +sid;
+       }
+    }
+</script>
 <%- include('../parts/html-foot') %>
