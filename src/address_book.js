@@ -56,6 +56,20 @@ router.get('/logout', (req, res)=>{
     res.redirect('/address-book/list');
 });
 
+router.get('/del/:sid', (req, res)=>{
+
+
+    let referer = req.get('Referer'); // 從哪裡來
+    const sql = "DELETE FROM `address_book` WHERE sid=?";
+    db.query(sql, [req.params.sid])
+        .then(([r])=>{
+            if(referer){
+                res.redirect(referer)
+            } else {
+                res.redirect('/address-book/list')
+            }
+        })
+})
 router.get('/edit/:sid', (req, res)=>{
     const sql = "SELECT * FROM address_book WHERE sid=?";
     db.query(sql, [req.params.sid])
